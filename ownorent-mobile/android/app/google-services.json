@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "502323139497",
+    "project_id": "ownorent-d6961",
+    "storage_bucket": "ownorent-d6961.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:502323139497:android:39281919ebcf470a56eab8",
+        "android_client_info": {
+          "package_name": "com.example.ownorent"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "502323139497-2vl7dr25ed9pb5liqr6vn5dorjro23ar.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAK_EC4GaASX3j2dScwNDPmRMAKHFxzdS8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "502323139497-2vl7dr25ed9pb5liqr6vn5dorjro23ar.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
