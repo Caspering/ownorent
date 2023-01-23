@@ -85,8 +85,7 @@ class _IntroViewState extends State<IntroView> {
                           RouteController()
                               .pushAndRemoveUntil(context, IntroView());
                         } else {
-                          RouteController()
-                              .pushAndRemoveUntil(context, AuthView());
+                          RouteController().push(context, AuthView());
                         }
                       },
                       // ignore: prefer_const_constructors
