@@ -7,6 +7,9 @@ class Users {
   String? address;
   String? firstname;
   String? lastname;
+  String? profilePhoto;
+  bool? isVerified;
+
   Users(
       {this.address,
       this.id,
@@ -15,6 +18,8 @@ class Users {
       this.lastname,
       this.lat,
       this.long,
+      this.isVerified,
+      this.profilePhoto,
       this.phoneNumber});
   Users.fromMap(Map<String, dynamic> snapshot, this.id)
       : address = snapshot['address'],
@@ -23,6 +28,8 @@ class Users {
         lastname = snapshot['lastname'],
         lat = snapshot['lat'],
         long = snapshot['long'],
+        profilePhoto = snapshot['profilePhoto'],
+        isVerified = snapshot['isVerified'],
         phoneNumber = snapshot['phoneNumber'];
   toJson() {
     return {
@@ -32,7 +39,9 @@ class Users {
       "lastname": lastname,
       "lat": lat,
       "long": long,
-      "phoneNumber": phoneNumber
+      "phoneNumber": phoneNumber,
+      "isVerified": isVerified,
+      "profilePhoto": profilePhoto
     };
   }
 }
