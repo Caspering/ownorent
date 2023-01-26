@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:ownorent/core/services/authentication.dart';
 import 'package:ownorent/ui/views/auth_view.dart';
+import 'package:ownorent/ui/views/name.dart';
 import 'package:ownorent/utils/colors.dart';
 import 'package:provider/provider.dart';
 
+import '../../core/viewmodels/user_viewmodel.dart';
 import '../../utils/font_size.dart';
+import '../../utils/popup.dart';
 import '../../utils/router.dart';
+import 'app_index.dart';
 
 class IntroView extends StatefulWidget {
   const IntroView({Key? key}) : super(key: key);
@@ -18,6 +22,7 @@ class _IntroViewState extends State<IntroView> {
   @override
   Widget build(BuildContext context) {
     AuthenticationService _auth = Provider.of<AuthenticationService>(context);
+    UserViewmodel _userViewModel = Provider.of<UserViewmodel>(context);
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
@@ -82,8 +87,15 @@ class _IntroViewState extends State<IntroView> {
                       onPressed: () async {
                         _auth.getAuthState();
                         if (_auth.authState == true) {
-                          RouteController()
-                              .pushAndRemoveUntil(context, IntroView());
+                          PopUp().popLoad(context);
+                          bool result =
+                              await _userViewModel.checkIfUser(_auth.userId);
+                          if (result == true) {
+                            RouteController()
+                                .pushAndRemoveUntil(context, AppIndex());
+                          } else {
+                            RouteController().push(context, Fullname());
+                          }
                         } else {
                           RouteController().push(context, AuthView());
                         }

@@ -7,9 +7,15 @@ class AuthenticationService extends ChangeNotifier {
   bool? _authState;
   String? get userId => _userId;
   bool? get authState => _authState;
+  User? _user;
+  User? get user => _user;
 
   void setAuthState(bool value) {
     _authState = value;
+  }
+
+  setUser(us) {
+    _user = us;
   }
 
   setUserId(uid) {
@@ -24,6 +30,7 @@ class AuthenticationService extends ChangeNotifier {
       final User? user = userCred.user;
       setUserId(user?.uid);
       setAuthState(true);
+      setUser(user);
       return user;
     } on FirebaseAuthException catch (e) {
       throw Exception(e.message);
@@ -49,6 +56,7 @@ class AuthenticationService extends ChangeNotifier {
       final User? user = userCredential.user;
       setUserId(user?.uid);
       setAuthState(true);
+      setUser(user);
       return user;
     } on FirebaseAuthException catch (e) {
       throw Exception(e.message);
@@ -63,6 +71,7 @@ class AuthenticationService extends ChangeNotifier {
     } else {
       setAuthState(true);
       setUserId(currentUser.uid);
+      setUser(currentUser);
     }
   }
 }

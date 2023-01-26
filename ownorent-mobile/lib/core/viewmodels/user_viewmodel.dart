@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:ownorent/core/services/api.dart';
 
@@ -6,6 +8,14 @@ import '../services/firebase_storage.dart';
 
 class UserViewmodel extends ChangeNotifier {
   final _api = Api("users");
+  String? _firstName;
+  String? _lastName;
+  String? get firstname => _firstName;
+  File? _image;
+  String? get lastname => _lastName;
+  File? get image => _image;
+  String? get phoneNumber => _phoneNumber;
+  String? _phoneNumber;
   Users? _currentUser;
   String? _imageUrl;
   String? get imageUrl => _imageUrl;
@@ -20,11 +30,39 @@ class UserViewmodel extends ChangeNotifier {
     return Users.fromMap(result.data() as Map<String, dynamic>, result.id);
   }
 
+  Future<bool> checkIfUser(userId) async {
+    var result = await _api.getDocumentById(userId);
+    if (result.exists) {
+      setCurrentUser(
+          Users.fromMap(result.data() as Map<String, dynamic>, result.id));
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   setCurrentUser(cUser) {
     _currentUser = cUser;
   }
 
-  adduser(Users data) {
-    return _api.addData(data.toJson());
+  adduser(Users data, userId) {
+    return _api.setData(data.toJson(), userId);
+  }
+
+  setImage(photo) {
+    _image = photo;
+    notifyListeners();
+  }
+
+  void setFirstname(text) {
+    _firstName = text;
+  }
+
+  void setLastname(text) {
+    _lastName = text;
+  }
+
+  void setPhoneNumber(text) {
+    _phoneNumber = text;
   }
 }

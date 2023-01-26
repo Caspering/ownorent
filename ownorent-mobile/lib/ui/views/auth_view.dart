@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:ownorent/ui/views/signup.dart';
+import 'package:ownorent/ui/views/singin.dart';
 import 'package:ownorent/utils/colors.dart';
 import 'package:ownorent/utils/popup.dart';
 
@@ -82,7 +84,9 @@ class _AuthViewState extends State<AuthView> {
                         borderRadius: BorderRadius.circular(20),
                         border: Border.all(color: ownorentPurple)),
                     child: MaterialButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        RouteController().push(context, Login());
+                      },
                       child: Text(
                         "Login",
                         style: TextStyle(
@@ -103,7 +107,7 @@ class _AuthViewState extends State<AuthView> {
                         border: Border.all(color: ownorentPurple)),
                     child: MaterialButton(
                       onPressed: () {
-                        PopUp().showSuccess(context, "Done successfully");
+                        RouteController().push(context, SignUp());
                       },
                       child: Text(
                         "Sign up",
