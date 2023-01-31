@@ -4,5 +4,7 @@ List<String> houseTypes = [
   'Duplex',
   "Flat",
   "Studio apartment",
-  "Condo"
+  "Condo",
+  "single room",
+  "self con"
 ];
