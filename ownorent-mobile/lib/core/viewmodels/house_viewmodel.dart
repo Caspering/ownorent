@@ -8,6 +8,7 @@ class HouseViewmodel extends ChangeNotifier {
   Api _api = Api("houses");
   List<House> houses = [];
   List<House> feed = [];
+  List<House> userHomes = [];
   House? _currentHouse;
   House? get currentHouse => _currentHouse;
   setCurrentHouse(house) {
@@ -32,5 +33,13 @@ class HouseViewmodel extends ChangeNotifier {
         .map((doc) => House.fromMap(doc as Map<String, dynamic>, doc.id))
         .toList();
     return feed;
+  }
+
+  Future<List<House>> getUserHomes(userId) async {
+    var result = await _api.getWhereIsEqualTo(userId, "ownersId");
+    userHomes = result.docs
+        .map((doc) => House.fromMap(doc as Map<String, dynamic>, doc.id))
+        .toList();
+    return userHomes;
   }
 }
