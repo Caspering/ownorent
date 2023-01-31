@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:ownorent/core/services/authentication.dart';
+import 'package:ownorent/ui/views/app_index.dart';
 import 'package:ownorent/ui/views/intro_view.dart';
 import 'package:ownorent/utils/colors.dart';
 import 'package:ownorent/utils/router.dart';
@@ -105,7 +106,7 @@ class _LoginState extends State<Login> {
                                 _passwordField.text.trim())
                             .then((value) {
                           RouteController()
-                              .pushAndRemoveUntil(context, IntroView());
+                              .pushAndRemoveUntil(context, AppIndex());
                         }).catchError((e) {
                           RouteController().pop(context);
                           PopUp().showError(context, e.message);

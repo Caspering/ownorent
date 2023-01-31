@@ -36,4 +36,21 @@ class House {
         ownersId = snapshot['ownersId'],
         type = snapshot['type'],
         videoTour = snapshot['videoTour'];
+
+  toJson() {
+    return {
+      accomodationType: "accomodationType",
+      address: "address",
+      bathroomNumber: "bathroom",
+      bedroomNumber: "bedroom",
+      bathroomNumber: "bathroomNumber",
+      description: "description",
+      images: "images",
+      locationLat: "locationLat",
+      locationLong: "locationLong",
+      ownersId: "ownersId",
+      type: "type",
+      videoTour: "videoTour"
+    };
+  }
 }

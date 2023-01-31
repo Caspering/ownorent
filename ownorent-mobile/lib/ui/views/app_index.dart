@@ -34,11 +34,13 @@ class _AppIndexState extends State<AppIndex> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: currentIndex != 3 ? Avatar() : null,
-        backgroundColor: ownorentWhite,
-        elevation: 0.0,
-      ),
+      appBar: currentIndex == 0
+          ? AppBar(
+              leading: Avatar(),
+              backgroundColor: ownorentWhite,
+              elevation: 0.0,
+            )
+          : null,
       bottomNavigationBar: Theme(
         data: Theme.of(context).copyWith(
           canvasColor: ownorentWhite,

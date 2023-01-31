@@ -31,4 +31,10 @@ class LocationService extends ChangeNotifier {
     var first = addresses.first;
     return first.locality;
   }
+
+  getCoordinatesFromAddress(String area) async {
+    List<Location> location = await locationFromAddress(area);
+    var first = location.first;
+    return LatLng(first.latitude, first.longitude);
+  }
 }
