@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:ownorent/core/services/location_service.dart';
 import 'package:ownorent/ui/shared/loader.dart';
 import 'package:ownorent/ui/views/intro_view.dart';
 import 'package:provider/provider.dart';
@@ -18,6 +19,7 @@ void main() async {
 
 AuthenticationService _authenticationService = AuthenticationService();
 UserViewmodel _userViewmodel = UserViewmodel();
+LocationService _locationService = LocationService();
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -29,6 +31,9 @@ class MyApp extends StatelessWidget {
         providers: [
           ChangeNotifierProvider(create: (_) {
             return _authenticationService;
+          }),
+          ChangeNotifierProvider(create: (_) {
+            return _locationService;
           }),
           ChangeNotifierProvider(create: (_) {
             return _userViewmodel;

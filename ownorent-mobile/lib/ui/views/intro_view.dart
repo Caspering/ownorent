@@ -85,6 +85,7 @@ class _IntroViewState extends State<IntroView> {
                   width: MediaQuery.of(context).size.width / 1.5,
                   child: MaterialButton(
                       onPressed: () async {
+                        
                         _auth.getAuthState();
                         if (_auth.authState == true) {
                           PopUp().popLoad(context);
