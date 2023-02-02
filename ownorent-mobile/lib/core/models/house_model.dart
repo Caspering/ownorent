@@ -39,18 +39,17 @@ class House {
 
   toJson() {
     return {
-      accomodationType: "accomodationType",
-      address: "address",
-      bathroomNumber: "bathroom",
-      bedroomNumber: "bedroom",
-      bathroomNumber: "bathroomNumber",
-      description: "description",
-      images: "images",
-      locationLat: "locationLat",
-      locationLong: "locationLong",
-      ownersId: "ownersId",
-      type: "type",
-      videoTour: "videoTour"
+      "accomodationType": accomodationType,
+      "address": address,
+      "bedroomNumber": bedroomNumber,
+      "bathroomNumber": bathroomNumber,
+      "description": description,
+      "images": images,
+      "locationLat": locationLat,
+      "locationLong": locationLong,
+      "ownersId": ownersId,
+      "type": type,
+      "videoTour": videoTour
     };
   }
 }

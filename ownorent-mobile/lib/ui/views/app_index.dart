@@ -5,6 +5,7 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:ownorent/ui/views/user_house_view.dart';
 import 'package:ownorent/utils/colors.dart';
 
 import '../shared/avatar.dart';
@@ -27,7 +28,7 @@ class _AppIndexState extends State<AppIndex> {
     //saved homes
     Container(),
     //my home
-    Container(),
+    MyHouses(),
     //profile
     Container()
   ];

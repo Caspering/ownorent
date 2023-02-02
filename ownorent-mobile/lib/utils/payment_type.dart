@@ -1,5 +1,1 @@
-List<String> paymentType = [
-  "Rent",
-  "Installment",
-  "Full purchase",
-];
+List<String> paymentType = ["Rent", "Installment", "Full purchase", "shortlet"];
