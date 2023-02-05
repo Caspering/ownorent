@@ -8,6 +8,7 @@ import 'package:ownorent/utils/bedroom_number.dart';
 import 'package:ownorent/utils/house_types.dart';
 import 'package:ownorent/utils/payment_type.dart';
 import 'package:provider/provider.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 import '../../core/services/authentication.dart';
 import '../../core/viewmodels/house_viewmodel.dart';
@@ -26,7 +27,8 @@ class HouseDescription extends StatefulWidget {
 
 class _HouseDescriptionState extends State<HouseDescription> {
   TextEditingController _desc = TextEditingController();
-
+  TextEditingController _price = TextEditingController();
+  bool? isPrice;
   @override
   Widget build(BuildContext context) {
     AuthenticationService _auth = Provider.of<AuthenticationService>(context);
@@ -128,6 +130,27 @@ class _HouseDescriptionState extends State<HouseDescription> {
               ),
               Center(
                 child: CustomTextField(
+                  hintText: "Price",
+                  controller: _price,
+                  errorText: isPrice == false ? "Invalid price" : null,
+                  onChanged: (String value) {
+                    if (value.isNumber() && value.length > 2) {
+                      setState(() {
+                        isPrice = true;
+                      });
+                    } else {
+                      setState(() {
+                        isPrice = false;
+                      });
+                    }
+                  },
+                ),
+              ),
+              Container(
+                height: 5,
+              ),
+              Center(
+                child: CustomTextField(
                   hintText: "Describe this house in your own words",
                   controller: _desc,
                   maxChar: 150,
@@ -146,7 +169,8 @@ class _HouseDescriptionState extends State<HouseDescription> {
                   color: _houseViewmodel.bathroomNumber != null &&
                           _houseViewmodel.bedroomNumber != null &&
                           _houseViewmodel.houseType != null &&
-                          _houseViewmodel.paymentType != null
+                          _houseViewmodel.paymentType != null &&
+                          isPrice == true
                       ? ownorentPurple
                       : ownorentPurpleGrey,
                   borderRadius: BorderRadius.circular(20),
@@ -155,15 +179,18 @@ class _HouseDescriptionState extends State<HouseDescription> {
                   onPressed: _houseViewmodel.bathroomNumber != null &&
                           _houseViewmodel.bedroomNumber != null &&
                           _houseViewmodel.houseType != null &&
-                          _houseViewmodel.paymentType != null
+                          _houseViewmodel.paymentType != null &&
+                          isPrice == true
                       ? () {
                           String descp =
                               "${_houseViewmodel.bedroomNumber}-bedroom ${_houseViewmodel.houseType} available for ${_houseViewmodel.paymentType}.";
                           if (_desc.text == "" || _desc.text == null) {
                             _houseViewmodel.setDesc(descp);
+                            _houseViewmodel.setPrice(_price.text);
                             print(_houseViewmodel.description);
                           } else {
                             _houseViewmodel.setDesc(_desc.text);
+                            _houseViewmodel.setPrice(_price.text);
                           }
                           RouteController().push(context, HouseLocation());
                         }

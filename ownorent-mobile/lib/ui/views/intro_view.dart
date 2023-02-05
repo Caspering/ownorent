@@ -1,10 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:ownorent/core/services/authentication.dart';
 import 'package:ownorent/ui/views/auth_view.dart';
 import 'package:ownorent/ui/views/name.dart';
 import 'package:ownorent/utils/colors.dart';
 import 'package:provider/provider.dart';
 
+import '../../core/services/location_service.dart';
 import '../../core/viewmodels/user_viewmodel.dart';
 import '../../utils/font_size.dart';
 import '../../utils/popup.dart';
@@ -21,6 +25,7 @@ class IntroView extends StatefulWidget {
 class _IntroViewState extends State<IntroView> {
   @override
   Widget build(BuildContext context) {
+    final locationService = Provider.of<LocationService>(context);
     AuthenticationService _auth = Provider.of<AuthenticationService>(context);
     UserViewmodel _userViewModel = Provider.of<UserViewmodel>(context);
     return Scaffold(
@@ -85,10 +90,47 @@ class _IntroViewState extends State<IntroView> {
                   width: MediaQuery.of(context).size.width / 1.5,
                   child: MaterialButton(
                       onPressed: () async {
-                        
+                        PopUp().popLoad(context);
                         _auth.getAuthState();
+
+                        var position = await locationService.getPosition();
+                        if (position != null) {
+                          locationService.setCoordinates(
+                              LatLng(position.latitude, position.longitude));
+
+                          print(locationService.userCoordinates?.latitude);
+                          List<Placemark> addresses =
+                              await placemarkFromCoordinates(
+                                  position.latitude, position.longitude);
+                          var first = addresses.first;
+                          locationService.setAddress(first.locality ?? "");
+                          if (_auth.userId != null) {
+                            FirebaseFirestore.instance
+                                .collection("users")
+                                .doc(_auth.userId)
+                                .update({
+                              "lat": position.latitude,
+                              "long": position.longitude,
+                              "address": first.locality
+                            });
+                          }
+                        } else {
+                          locationService.setAddress("No location");
+                          locationService.setCoordinates(LatLng(0.0, 0.0));
+                          if (_auth.userId != null) {
+                            FirebaseFirestore.instance
+                                .collection("users")
+                                .doc(_auth.userId)
+                                .update({
+                              "lat": 0.0,
+                              "long": 0.0,
+                              "address": "Please enable location permission"
+                            });
+                          } else {
+                            print("gnjf");
+                          }
+                        }
                         if (_auth.authState == true) {
-                          PopUp().popLoad(context);
                           bool result =
                               await _userViewModel.checkIfUser(_auth.userId);
                           if (result == true) {

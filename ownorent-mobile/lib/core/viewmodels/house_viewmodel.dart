@@ -69,6 +69,18 @@ class HouseViewmodel extends ChangeNotifier {
     _address = add;
   }
 
+  String? _area;
+  String? get area => _area;
+  setArea(a) {
+    _area = a;
+  }
+
+  String? _price;
+  String? get price => _price;
+  setPrice(p) {
+    _price = p;
+  }
+
   List<String> _homeImages = [];
   List<String> get homeImages => _homeImages;
   setHomeImages(List images) async {
@@ -105,23 +117,26 @@ class HouseViewmodel extends ChangeNotifier {
   Future<List<House>> getAllHouses() async {
     var result = await _api.getDocuments();
     houses = result.docs
-        .map((doc) => House.fromMap(doc as Map<String, dynamic>, doc.id))
+        .map((doc) => House.fromMap(doc.data() as Map<String, dynamic>, doc.id))
         .toList();
     return houses;
   }
 
   Future<List<House>> getFeed(String address) async {
-    var result = await _api.getWhereIsEqualTo(address, "address");
+    var result = await _api.getWhereIsEqualTo(address, "area");
+
     feed = result.docs
-        .map((doc) => House.fromMap(doc as Map<String, dynamic>, doc.id))
+        .map((doc) => House.fromMap(doc.data() as Map<String, dynamic>, doc.id))
         .toList();
-    return feed;
+    feed.shuffle();
+
+    return feed.take(10).toList();
   }
 
   Future<List<House>> getUserHomes(userId) async {
     var result = await _api.getWhereIsEqualTo(userId, "ownersId");
     userHomes = result.docs
-        .map((doc) => House.fromMap(doc as Map<String, dynamic>, doc.id))
+        .map((doc) => House.fromMap(doc.data() as Map<String, dynamic>, doc.id))
         .toList();
     return userHomes;
   }

@@ -195,17 +195,24 @@ class _HouseImagesState extends State<HouseImages> {
                                 .setHomeImages(_houseViewmodel.fileImages);
 
                             await _houseViewmodel.addHouse(House(
-                              accomodationType: _houseViewmodel.houseType,
-                              address: _houseViewmodel.address,
-                              bathroomNumber: _houseViewmodel.bathroomNumber,
-                              bedroomNumber: _houseViewmodel.bedroomNumber,
-                              description: _houseViewmodel.description,
-                              images: urls,
-                              locationLat: _houseViewmodel.houseLat,
-                              locationLong: _houseViewmodel.houseLong,
-                              ownersId: _auth.userId,
-                              type: _houseViewmodel.paymentType,
-                            ));
+                                accomodationType: _houseViewmodel.houseType,
+                                address: _houseViewmodel.address,
+                                bathroomNumber: _houseViewmodel.bathroomNumber,
+                                bedroomNumber: _houseViewmodel.bedroomNumber,
+                                description: _houseViewmodel.description,
+                                images: urls,
+                                locationLat: _houseViewmodel.houseLat,
+                                locationLong: _houseViewmodel.houseLong,
+                                ownersId: _auth.userId,
+                                type: _houseViewmodel.paymentType,
+                                area: _houseViewmodel.area,
+                                price: _houseViewmodel.price,
+                                isPromoted: false,
+                                dateAdded: DateTime.now()));
+                            _houseViewmodel.fileImages.clear();
+                            _houseViewmodel.homeImages.clear();
+                            _houseViewmodel.setBathroomNumber(null);
+                            _houseViewmodel.setBedroomNumber(null);
                             RouteController()
                                 .pushAndRemoveUntil(context, AppIndex());
                           } catch (e) {

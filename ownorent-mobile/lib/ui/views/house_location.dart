@@ -114,6 +114,7 @@ class _HouseLocationState extends State<HouseLocation> {
                             "${_streetName.text} ${_streetNumber.text}, ${_area.text}";
                         LatLng location =
                             await _location.getCoordinatesFromAddress(address);
+                        _houseViewmodel.setArea(_area.text);
                         _houseViewmodel.setAddress(address);
                         _houseViewmodel.setHouseLat(location.latitude);
                         _houseViewmodel.setHouseLong(location.longitude);

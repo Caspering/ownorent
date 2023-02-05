@@ -5,6 +5,7 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:ownorent/ui/views/feed_view.dart';
 import 'package:ownorent/ui/views/user_house_view.dart';
 import 'package:ownorent/utils/colors.dart';
 
@@ -24,7 +25,7 @@ class _AppIndexState extends State<AppIndex> {
     //find homes
     Mapview(),
     //feed
-    Container(),
+    FeedView(),
     //saved homes
     Container(),
     //my home
