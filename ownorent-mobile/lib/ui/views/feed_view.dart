@@ -3,8 +3,10 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:ownorent/core/models/house_model.dart';
 import 'package:ownorent/ui/shared/empty_screen.dart';
+import 'package:ownorent/ui/views/house_detail_view.dart';
 import 'package:ownorent/ui/widgets/feed_container.dart';
 import 'package:ownorent/utils/colors.dart';
+import 'package:ownorent/utils/router.dart';
 import 'package:provider/provider.dart';
 
 import '../../core/services/authentication.dart';
@@ -54,7 +56,15 @@ class _FeedViewState extends State<FeedView> {
                       itemCount: snapshot.data!.length,
                       itemBuilder: (context, index) {
                         return FeedContainer(
+                          onTapped: () {
+                            _houseViewmodel
+                                .setCurrentHouse(snapshot.data?[index]);
+                            print(
+                                _houseViewmodel.currentHouse?.accomodationType);
+                            RouteController().push(context, HouseDetailView());
+                          },
                           isPromoted: false,
+                          docId: snapshot.data?[index].id ?? "",
                           address: snapshot.data?[index].address ?? "",
                           bathroom: snapshot.data?[index].bathroomNumber ?? "",
                           bedroom: snapshot.data?[index].bedroomNumber ?? "",

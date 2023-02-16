@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class DateTimeFormatter {
@@ -43,11 +44,16 @@ class DateTimeFormatter {
     return newDate;
   }
 
+  String displayTimeI(TimeOfDay time, context) {
+    var format = DateFormat('jm');
+    var newDate = time.format(context);
+    return newDate;
+  }
+
   String displayT(timestamp) {
     var format = DateFormat('jm');
     var time = timestamp;
     var newDate = format.parse(time);
-
     return format.format(newDate);
   }
 

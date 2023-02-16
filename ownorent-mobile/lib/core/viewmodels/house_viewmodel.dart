@@ -122,6 +122,11 @@ class HouseViewmodel extends ChangeNotifier {
     return houses;
   }
 
+  Future<House> getHouseById(id) async {
+    var result = await _api.getDocumentById(id);
+    return House.fromMap(result.data() as Map<String, dynamic>, result.id);
+  }
+
   Future<List<House>> getFeed(String address) async {
     var result = await _api.getWhereIsEqualTo(address, "area");
 

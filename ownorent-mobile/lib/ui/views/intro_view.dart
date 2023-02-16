@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:ownorent/core/services/authentication.dart';
+import 'package:ownorent/core/viewmodels/favorite_viewmodel.dart';
 import 'package:ownorent/ui/views/auth_view.dart';
 import 'package:ownorent/ui/views/name.dart';
 import 'package:ownorent/utils/colors.dart';
@@ -28,6 +29,7 @@ class _IntroViewState extends State<IntroView> {
     final locationService = Provider.of<LocationService>(context);
     AuthenticationService _auth = Provider.of<AuthenticationService>(context);
     UserViewmodel _userViewModel = Provider.of<UserViewmodel>(context);
+    FavoriteViewModel _favorites = Provider.of<FavoriteViewModel>(context);
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
@@ -90,6 +92,8 @@ class _IntroViewState extends State<IntroView> {
                   width: MediaQuery.of(context).size.width / 1.5,
                   child: MaterialButton(
                       onPressed: () async {
+                        await _favorites.getFavourites();
+                        print(_favorites.favoriteIds);
                         PopUp().popLoad(context);
                         _auth.getAuthState();
 

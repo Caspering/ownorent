@@ -35,8 +35,6 @@ class LocationService extends ChangeNotifier {
   Future<LatLng> getCoordinatesFromAddress(String area) async {
     List<Location> location = await locationFromAddress(area);
     var first = location.first;
-    print(first.latitude);
-    print(first.longitude);
     return LatLng(first.latitude, first.longitude);
   }
 }

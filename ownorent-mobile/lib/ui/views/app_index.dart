@@ -5,6 +5,8 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:ownorent/ui/views/appointments_view.dart';
+import 'package:ownorent/ui/views/favorites_view.dart';
 import 'package:ownorent/ui/views/feed_view.dart';
 import 'package:ownorent/ui/views/user_house_view.dart';
 import 'package:ownorent/utils/colors.dart';
@@ -27,11 +29,11 @@ class _AppIndexState extends State<AppIndex> {
     //feed
     FeedView(),
     //saved homes
-    Container(),
+    FavoritesView(),
     //my home
     MyHouses(),
     //profile
-    Container()
+    CalendarView()
   ];
   @override
   Widget build(BuildContext context) {
@@ -84,7 +86,7 @@ class _AppIndexState extends State<AppIndex> {
             BottomNavigationBarItem(
                 label: "Profile",
                 icon: Icon(
-                  Icons.person_2_outlined,
+                  Icons.person_outlined,
                   size: 20,
                 ))
           ],

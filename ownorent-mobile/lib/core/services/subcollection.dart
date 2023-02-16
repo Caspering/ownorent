@@ -84,6 +84,10 @@ class SubApi {
         .get();
   }
 
+  Future<QuerySnapshot> getWhereGreaterThan(field, value) {
+    return ref.where(field, isGreaterThan: value).get();
+  }
+
   deleteDocument(id) {
     ref.doc(id).delete();
   }

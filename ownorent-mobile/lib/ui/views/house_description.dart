@@ -153,7 +153,7 @@ class _HouseDescriptionState extends State<HouseDescription> {
                 child: CustomTextField(
                   hintText: "Describe this house in your own words",
                   controller: _desc,
-                  maxChar: 150,
+                  maxChar: 250,
                   minLines: 5,
                 ),
               ),
