@@ -63,7 +63,7 @@ class ProfilePictureState extends State<ProfilePicture> {
               Container(
                 margin: EdgeInsets.only(left: 10, top: 15),
                 child: Text(
-                  "Complete registration 2/3",
+                  "Complete registration 2/2",
                   style: TextStyle(
                       color: ownorentPurple, fontSize: TextSize().p(context)),
                 ),
@@ -167,6 +167,18 @@ class ProfilePictureState extends State<ProfilePicture> {
                                         phoneNumber: userViewModel.phoneNumber),
                                     authService.userId)
                                 .then((value) {
+                              userViewModel.setCurrentUser(
+                                Users(
+                                    address: "",
+                                    email: authService.user?.email,
+                                    firstname: userViewModel.firstname,
+                                    lastname: userViewModel.lastname,
+                                    lat: 0.0,
+                                    long: 0.0,
+                                    isVerified: false,
+                                    profilePhoto: userViewModel.imageUrl,
+                                    phoneNumber: userViewModel.phoneNumber),
+                              );
                               RouteController().pop(context);
                               RouteController()
                                   .pushAndRemoveUntil(context, AppIndex());

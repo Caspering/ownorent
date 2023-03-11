@@ -23,6 +23,18 @@ class AuthenticationService extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future updatePassword(old, newPassword) async {
+    final cred = EmailAuthProvider.credential(
+        email: auth.currentUser?.email ?? "", password: old);
+    try {
+      await auth.currentUser?.reauthenticateWithCredential(cred).then((value) {
+        auth.currentUser?.updatePassword(newPassword);
+      });
+    } on FirebaseAuthException catch (e) {
+      throw Exception(e.message);
+    }
+  }
+
   Future login(email, password) async {
     try {
       var userCred = await auth.signInWithEmailAndPassword(
@@ -43,10 +55,18 @@ class AuthenticationService extends ChangeNotifier {
     setAuthState(false);
   }
 
-  Future deleteAccount() async {
-    await auth.currentUser?.delete();
-    setUserId(null);
-    setAuthState(false);
+  Future deleteAccount(password) async {
+    final cred = EmailAuthProvider.credential(
+        email: auth.currentUser?.email ?? "", password: password);
+    try {
+      auth.currentUser?.reauthenticateWithCredential(cred).then((value) async {
+        await auth.currentUser?.delete();
+        setUserId(null);
+        setAuthState(false);
+      });
+    } on FirebaseAuthException catch (e) {
+      throw Exception(e.message);
+    }
   }
 
   Future<User?> register(email, password) async {

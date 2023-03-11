@@ -61,7 +61,8 @@ class _FeedViewState extends State<FeedView> {
                                 .setCurrentHouse(snapshot.data?[index]);
                             print(
                                 _houseViewmodel.currentHouse?.accomodationType);
-                            RouteController().push(context, HouseDetailView());
+                            RouteController()
+                                .push(context, const HouseDetailView());
                           },
                           isPromoted: false,
                           docId: snapshot.data?[index].id ?? "",

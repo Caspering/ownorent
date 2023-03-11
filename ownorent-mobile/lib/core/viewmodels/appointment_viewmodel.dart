@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:ownorent/core/models/appointment_model.dart';
 import 'package:ownorent/core/services/subcollection.dart';
+import 'package:ownorent/utils/date.dart';
 
 class AppointmentViewModel extends ChangeNotifier {
   DateTime _date = DateTime.now();
@@ -18,10 +19,11 @@ class AppointmentViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  DateTime _selectedDate = DateTime.now();
-  DateTime get selectedDate => _selectedDate;
-  selectCurrentDate(sDate) {
-    _selectedDate = sDate;
+  String _currentDate =
+      DateTimeFormatter().displayDateWithMMM(DateTime.now()).trim();
+  String get currentDate => _currentDate;
+  selectCurrentDate(String sDate) {
+    _currentDate = sDate.trim();
     notifyListeners();
   }
 
@@ -54,7 +56,7 @@ class AppointmentViewModel extends ChangeNotifier {
   List<Appointment> userCalender = [];
   Future<List<Appointment>> getUserCalender(uid, date) async {
     var result = await SubApi("appointments", "userAppointments", uid)
-        .getWhereIsEqualTo("date", date);
+        .getWhereIsEqualTo(date, "date");
     userCalender = result.docs
         .map((doc) =>
             Appointment.fromMap(doc.data() as Map<String, dynamic>, doc.id))

@@ -165,7 +165,8 @@ class _BookAppointmentState extends State<BookAppointment> {
                               appointmentStatus: "pending",
                               visitorsPicture:
                                   _userViewModel.currentUser?.profilePhoto,
-                              date: _appointmentViewmodel.date,
+                              date: DateTimeFormatter().displayDateWithMMM(
+                                  _appointmentViewmodel.date),
                               time: _appointmentViewmodel.time.format(context),
                               visitorsId: _auth.userId,
                               visitorsName:
@@ -175,6 +176,7 @@ class _BookAppointmentState extends State<BookAppointment> {
                                   _userViewModel.currentUser?.phoneNumber,
                               houseAddress:
                                   _houseViewmodel.currentHouse?.address,
+                              agentId: result?.id,
                               agentNumber: result?.phoneNumber),
                           _auth.userId,
                           _houseViewmodel.currentHouse?.ownersId);

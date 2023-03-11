@@ -59,7 +59,7 @@ class _IntroViewState extends State<IntroView> {
                   margin: EdgeInsets.only(left: 15),
                   width: MediaQuery.of(context).size.width / 1.2,
                   child: Text(
-                    "Find your\ndream place",
+                    "Find your\ndream house",
                     style: TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: TextSize().h(context),

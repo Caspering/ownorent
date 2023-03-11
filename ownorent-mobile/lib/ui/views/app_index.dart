@@ -5,9 +5,11 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:ownorent/ui/user_home_view.dart';
 import 'package:ownorent/ui/views/appointments_view.dart';
 import 'package:ownorent/ui/views/favorites_view.dart';
 import 'package:ownorent/ui/views/feed_view.dart';
+import 'package:ownorent/ui/views/profile_view.dart';
 import 'package:ownorent/ui/views/user_house_view.dart';
 import 'package:ownorent/utils/colors.dart';
 
@@ -28,12 +30,11 @@ class _AppIndexState extends State<AppIndex> {
     Mapview(),
     //feed
     FeedView(),
-    //saved homes
-    FavoritesView(),
+
     //my home
-    MyHouses(),
+    UserHomeView(),
     //profile
-    CalendarView()
+    ProfileView()
   ];
   @override
   Widget build(BuildContext context) {
@@ -69,12 +70,6 @@ class _AppIndexState extends State<AppIndex> {
                 label: "Feed",
                 icon: Icon(
                   Icons.feed_outlined,
-                  size: 20,
-                )),
-            BottomNavigationBarItem(
-                label: "Favorites",
-                icon: Icon(
-                  Icons.favorite_outline,
                   size: 20,
                 )),
             BottomNavigationBarItem(

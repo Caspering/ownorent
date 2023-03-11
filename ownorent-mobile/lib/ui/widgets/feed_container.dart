@@ -44,7 +44,7 @@ class _FeedContainerState extends State<FeedContainer> {
     return GestureDetector(
         onTap: widget.onTapped,
         child: Container(
-          height: MediaQuery.of(context).size.height / 2.5,
+          height: MediaQuery.of(context).size.height / 2.4,
           width: MediaQuery.of(context).size.width / 1.2,
           margin: EdgeInsets.all(10),
           decoration: BoxDecoration(

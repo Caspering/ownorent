@@ -76,7 +76,7 @@ class _FullnameState extends State<Fullname> {
                           margin: EdgeInsets.only(top: 15),
                           child: CustomTextField(
                             onChanged: (String text) {
-                              if (text.length > 3) {
+                              if (text.length > 1) {
                                 setState(() {
                                   isFname = true;
                                 });
@@ -88,7 +88,7 @@ class _FullnameState extends State<Fullname> {
                             },
                             hintText: "First name",
                             errorText: isFname == false
-                                ? "first name must be more than 3 characters"
+                                ? "first name must be more than 1 characters"
                                 : null,
                             controller: _firstName,
                             // prefix: Icons.person_outline_rounded,
@@ -98,7 +98,7 @@ class _FullnameState extends State<Fullname> {
                           // margin: EdgeInsets.only(top),
                           child: CustomTextField(
                     onChanged: (String text) {
-                      if (text.length > 3) {
+                      if (text.length > 1) {
                         setState(() {
                           isLname = true;
                         });
@@ -110,7 +110,7 @@ class _FullnameState extends State<Fullname> {
                     },
 
                     errorText: isLname == false
-                        ? "last name must be more than 3 characters"
+                        ? "last name must be more than 1 characters"
                         : null,
                     hintText: "Last name",
                     controller: _lastName,

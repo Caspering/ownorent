@@ -1,12 +1,13 @@
 class Appointment {
   String? id;
-  dynamic date;
-  dynamic time;
+  String? date;
+  String? time;
   String? visitorsId;
   String? visitorsName;
   String? visitorsPicture;
   String? appointmentStatus; //postponed, accepted, rejected, completed
   String? visitorsPhoneNumber;
+  String? agentId;
   String? houseId;
   String? houseAddress;
   String? agentNumber;
@@ -21,6 +22,7 @@ class Appointment {
       this.visitorsPhoneNumber,
       this.time,
       this.houseAddress,
+      this.agentId,
       this.agentNumber});
   Appointment.fromMap(Map<String, dynamic> snapshot, this.id)
       : date = snapshot['date'],
@@ -32,6 +34,7 @@ class Appointment {
         visitorsPhoneNumber = snapshot['visitorsPhoneNumber'],
         agentNumber = snapshot['agentNumber'],
         houseAddress = snapshot['houseAddress'],
+        agentId = snapshot['agentId'],
         appointmentStatus = snapshot['appointmentStatus'];
 
   toJson() {
@@ -42,6 +45,7 @@ class Appointment {
       "visitorsName": visitorsName,
       "visitorsPicture": visitorsPicture,
       "appointmentStatus": appointmentStatus,
+      "agentId": agentId,
       "houseId": houseId,
       "agentNumber": agentNumber,
       "houseAddress": houseAddress,

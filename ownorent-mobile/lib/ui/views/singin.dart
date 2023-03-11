@@ -4,10 +4,12 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:ownorent/core/services/authentication.dart';
 import 'package:ownorent/ui/views/app_index.dart';
 import 'package:ownorent/ui/views/intro_view.dart';
+import 'package:ownorent/ui/views/name.dart';
 import 'package:ownorent/utils/colors.dart';
 import 'package:ownorent/utils/router.dart';
 import 'package:provider/provider.dart';
 
+import '../../core/viewmodels/user_viewmodel.dart';
 import '../../utils/font_size.dart';
 import '../../utils/popup.dart';
 import '../shared/custom_textfield.dart';
@@ -25,6 +27,7 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     AuthenticationService _auth = Provider.of<AuthenticationService>(context);
+    final _userViewModel = Provider.of<UserViewmodel>(context);
     return Scaffold(
         appBar: AppBar(
           backgroundColor: ownorentWhite,
@@ -104,9 +107,15 @@ class _LoginState extends State<Login> {
                         await _auth
                             .login(_emailField.text.trim(),
                                 _passwordField.text.trim())
-                            .then((value) {
-                          RouteController()
-                              .pushAndRemoveUntil(context, AppIndex());
+                            .then((value) async {
+                          bool result =
+                              await _userViewModel.checkIfUser(_auth.userId);
+                          if (result == true) {
+                            RouteController()
+                                .pushAndRemoveUntil(context, AppIndex());
+                          } else {
+                            RouteController().push(context, Fullname());
+                          }
                         }).catchError((e) {
                           RouteController().pop(context);
                           PopUp().showError(context, e.message);

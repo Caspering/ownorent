@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:ownorent/ui/shared/house_owner_card.dart';
 import 'package:ownorent/ui/views/book_appointment.dart';
-import 'package:ownorent/ui/widgets/feed_container.dart';
+
 import 'package:ownorent/utils/date.dart';
 import 'package:ownorent/utils/font_size.dart';
 import 'package:provider/provider.dart';
@@ -72,6 +71,7 @@ class _HouseDetailViewState extends State<HouseDetailView> {
       body: ListView.builder(
           itemCount: _houseViewmodel.currentHouse?.images?.length,
           itemBuilder: (context, index) {
+            // print(_houseViewmodel.currentHouse?.images);
             return Container(
               margin: EdgeInsets.only(top: 5),
               decoration: BoxDecoration(
@@ -166,76 +166,83 @@ class _HouseDetailViewState extends State<HouseDetailView> {
             ),
           ),
           body: Container(
-            color: ownorentWhite,
-            width: MediaQuery.of(context).size.width,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Divider(
-                  color: ownorentPurpleGrey,
-                ),
-                Container(
-                  margin:
-                      EdgeInsets.only(top: 5, left: 15, bottom: 10, right: 15),
-                  child: Text(
-                    '${_houseViewmodel.currentHouse?.accomodationType} for ${_houseViewmodel.currentHouse?.type}',
-                    style: TextStyle(
-                      color: ownorentPurple,
-                      fontSize: TextSize().small(context),
+              color: ownorentWhite,
+              width: MediaQuery.of(context).size.width,
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Divider(
+                      color: ownorentPurpleGrey,
                     ),
-                  ),
-                ),
-                Container(
-                  margin:
-                      EdgeInsets.only(top: 5, left: 15, bottom: 10, right: 15),
-                  child: Text(
-                    '@ ${_houseViewmodel.currentHouse?.address}',
-                    style: TextStyle(
-                      color: ownorentPurple,
-                      fontSize: TextSize().h3(context),
+                    Container(
+                      margin: EdgeInsets.only(
+                          top: 5, left: 15, bottom: 10, right: 15),
+                      child: Text(
+                        '${_houseViewmodel.currentHouse?.accomodationType} for ${_houseViewmodel.currentHouse?.type}',
+                        style: TextStyle(
+                          color: ownorentPurple,
+                          fontSize: TextSize().small(context),
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-                Divider(
-                  color: ownorentPurpleGrey,
-                ),
-                Container(
-                  margin:
-                      EdgeInsets.only(top: 5, left: 15, bottom: 10, right: 15),
-                  child: Text(
-                    'Description',
-                    style: TextStyle(
-                      color: ownorentPurple,
-                      fontWeight: FontWeight.w600,
-                      fontSize: TextSize().p(context),
+                    Container(
+                      margin: EdgeInsets.only(
+                          top: 5, left: 15, bottom: 10, right: 15),
+                      child: Text(
+                        '@ ${_houseViewmodel.currentHouse?.address}',
+                        style: TextStyle(
+                          color: ownorentPurple,
+                          fontSize: TextSize().h3(context),
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-                Container(
-                  margin:
-                      EdgeInsets.only(top: 5, left: 15, bottom: 10, right: 15),
-                  child: Text(
-                    '${_houseViewmodel.currentHouse?.description}',
-                    style: TextStyle(
-                      color: ownorentPurple,
-                      fontSize: TextSize().p(context),
+                    Divider(
+                      color: ownorentPurpleGrey,
                     ),
-                  ),
+                    Container(
+                      margin: EdgeInsets.only(
+                          top: 5, left: 15, bottom: 10, right: 15),
+                      child: Text(
+                        'Description',
+                        style: TextStyle(
+                          color: ownorentPurple,
+                          fontWeight: FontWeight.w600,
+                          fontSize: TextSize().p(context),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(
+                          top: 5, left: 15, bottom: 10, right: 15),
+                      child: Text(
+                        '${_houseViewmodel.currentHouse?.description}',
+                        style: TextStyle(
+                          color: ownorentPurple,
+                          fontSize: TextSize().p(context),
+                        ),
+                      ),
+                    ),
+                    Divider(
+                      color: grey,
+                    ),
+                    HouseOwnerCard(
+                        role: "Home owner",
+                        ownerId: _houseViewmodel.currentHouse?.ownersId ?? "")
+                  ],
                 ),
-              ],
-            ),
-          )),
+              ))),
       bottomNavigationBar: BottomAppBar(
           elevation: 1.0,
-          // height: 90,
           child: Container(
+              height: 65,
               margin: EdgeInsets.only(
                 top: 10,
               ),
               width: MediaQuery.of(context).size.width / 2,
               child: Center(
                 child: Container(
-                  height: 80,
+                  height: 60,
                   width: MediaQuery.of(context).size.width / 1.5,
                   child: MaterialButton(
                       onPressed: () {

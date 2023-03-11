@@ -93,8 +93,7 @@ class _HouseLocationState extends State<HouseLocation> {
                     hintText: "Street name", controller: _streetName),
               ),
               Center(
-                child: CustomTextField(
-                    hintText: "Area eg.Enugu", controller: _area),
+                child: CustomTextField(hintText: "Area", controller: _area),
               ),
               Center(
                   child: Container(
