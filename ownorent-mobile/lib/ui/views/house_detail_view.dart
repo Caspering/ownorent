@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ownorent/ui/shared/house_owner_card.dart';
 import 'package:ownorent/ui/views/book_appointment.dart';
+import 'package:ownorent/ui/views/singin.dart';
 
 import 'package:ownorent/utils/date.dart';
 import 'package:ownorent/utils/font_size.dart';
@@ -246,7 +247,11 @@ class _HouseDetailViewState extends State<HouseDetailView> {
                   width: MediaQuery.of(context).size.width / 1.5,
                   child: MaterialButton(
                       onPressed: () {
-                        RouteController().push(context, BookAppointment());
+                        if (_auth.authState == true) {
+                          RouteController().push(context, BookAppointment());
+                        } else {
+                          RouteController().push(context, Login());
+                        }
                       },
                       // ignore: prefer_const_constructors
                       child: Text(

@@ -144,7 +144,7 @@ class _IntroViewState extends State<IntroView> {
                             RouteController().push(context, Fullname());
                           }
                         } else {
-                          RouteController().push(context, AuthView());
+                          RouteController().push(context, AppIndex());
                         }
                       },
                       // ignore: prefer_const_constructors

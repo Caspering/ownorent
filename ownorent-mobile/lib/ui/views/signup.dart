@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:ownorent/core/services/authentication.dart';
 import 'package:ownorent/ui/views/intro_view.dart';
 import 'package:ownorent/ui/views/name.dart';
+import 'package:ownorent/ui/views/singin.dart';
 import 'package:ownorent/utils/colors.dart';
 import 'package:ownorent/utils/router.dart';
 import 'package:provider/provider.dart';
@@ -120,7 +121,32 @@ class _SignUpState extends State<SignUp> {
                             fontSize: TextSize().h3(context)),
                       ),
                     ),
-                  )
+                  ),
+                  Container(
+                      margin: EdgeInsets.only(left: 15, top: 10),
+                      width: MediaQuery.of(context).size.width,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Already have an account?",
+                            style: TextStyle(
+                                color: ownorentPurpleGrey,
+                                fontSize: TextSize().p(context)),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              RouteController().push(context, Login());
+                            },
+                            child: Text(
+                              "Login",
+                              style: TextStyle(
+                                  color: ownorentPurple,
+                                  fontSize: TextSize().p(context)),
+                            ),
+                          )
+                        ],
+                      ))
                 ]))));
   }
 }

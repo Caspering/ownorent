@@ -9,10 +9,13 @@ import 'package:ownorent/ui/user_home_view.dart';
 import 'package:ownorent/ui/views/appointments_view.dart';
 import 'package:ownorent/ui/views/favorites_view.dart';
 import 'package:ownorent/ui/views/feed_view.dart';
+import 'package:ownorent/ui/views/not_logged_view.dart';
 import 'package:ownorent/ui/views/profile_view.dart';
 import 'package:ownorent/ui/views/user_house_view.dart';
 import 'package:ownorent/utils/colors.dart';
+import 'package:provider/provider.dart';
 
+import '../../core/services/authentication.dart';
 import '../shared/avatar.dart';
 import 'map.dart';
 
@@ -38,6 +41,18 @@ class _AppIndexState extends State<AppIndex> {
   ];
   @override
   Widget build(BuildContext context) {
+    AuthenticationService _auth = Provider.of<AuthenticationService>(context);
+    List<Widget> children = [
+      //find homes
+      Mapview(),
+      //feed
+      FeedView(),
+
+      //my home
+      _auth.authState == true ? UserHomeView() : NotLogged(),
+      //profile
+      _auth.authState == true ? ProfileView() : NotLogged()
+    ];
     return Scaffold(
       appBar: currentIndex == 0
           ? AppBar(

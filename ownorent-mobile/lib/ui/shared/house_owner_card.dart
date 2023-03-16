@@ -5,10 +5,14 @@ import 'package:flutter/widgets.dart';
 import 'package:ownorent/core/models/user_model.dart';
 import 'package:ownorent/core/viewmodels/user_viewmodel.dart';
 import 'package:ownorent/ui/shared/avatar.dart';
+import 'package:ownorent/ui/views/singin.dart';
 import 'package:ownorent/utils/colors.dart';
 import 'package:ownorent/utils/font_size.dart';
+import 'package:ownorent/utils/router.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../../core/services/authentication.dart';
 
 class HouseOwnerCard extends StatefulWidget {
   final String ownerId;
@@ -23,6 +27,7 @@ class _HouseOwnerCardState extends State<HouseOwnerCard> {
   @override
   Widget build(BuildContext context) {
     UserViewmodel _userViewmodel = Provider.of<UserViewmodel>(context);
+    AuthenticationService _auth = Provider.of<AuthenticationService>(context);
     return FutureBuilder<Users?>(
         future: _userViewmodel.getUserById(widget.ownerId),
         builder: (context, snapshot) {
@@ -48,11 +53,15 @@ class _HouseOwnerCardState extends State<HouseOwnerCard> {
                           fontSize: TextSize().small(context))),
                   trailing: IconButton(
                       onPressed: () async {
-                        final Uri launchUri = Uri(
-                          scheme: 'tel',
-                          path: snapshot.data?.phoneNumber,
-                        );
-                        await launchUrl(launchUri);
+                        if (_auth.authState == true) {
+                          final Uri launchUri = Uri(
+                            scheme: 'tel',
+                            path: snapshot.data?.phoneNumber,
+                          );
+                          await launchUrl(launchUri);
+                        } else {
+                          RouteController().push(context, Login());
+                        }
                       },
                       icon: Icon(
                         Icons.call,

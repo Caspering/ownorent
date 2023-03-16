@@ -5,6 +5,7 @@ import 'package:ownorent/core/services/authentication.dart';
 import 'package:ownorent/ui/views/app_index.dart';
 import 'package:ownorent/ui/views/intro_view.dart';
 import 'package:ownorent/ui/views/name.dart';
+import 'package:ownorent/ui/views/signup.dart';
 import 'package:ownorent/utils/colors.dart';
 import 'package:ownorent/utils/router.dart';
 import 'package:provider/provider.dart';
@@ -129,7 +130,35 @@ class _LoginState extends State<Login> {
                             fontSize: TextSize().h3(context)),
                       ),
                     ),
-                  )
+                  ),
+                  Container(
+                    height: 5,
+                  ),
+                  Container(
+                      margin: EdgeInsets.only(left: 15, top: 10),
+                      width: MediaQuery.of(context).size.width,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Don't have an account?",
+                            style: TextStyle(
+                                color: ownorentPurpleGrey,
+                                fontSize: TextSize().p(context)),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              RouteController().push(context, SignUp());
+                            },
+                            child: Text(
+                              "Sign up",
+                              style: TextStyle(
+                                  color: ownorentPurple,
+                                  fontSize: TextSize().p(context)),
+                            ),
+                          )
+                        ],
+                      ))
                 ]))));
   }
 }
