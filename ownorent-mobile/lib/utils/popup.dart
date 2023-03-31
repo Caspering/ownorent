@@ -23,6 +23,16 @@ class PopUp {
         confirmBtnColor: ownorentPurple);
   }
 
+  showInfo(context, text) {
+    QuickAlert.show(
+        context: context,
+        text: text,
+        textColor: ownorentPurple,
+        titleColor: ownorentPurple,
+        type: QuickAlertType.info,
+        confirmBtnColor: ownorentPurple);
+  }
+
   showSuccess(context, text) {
     QuickAlert.show(
         context: context,

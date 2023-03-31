@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:ownorent/core/services/authentication.dart';
 import 'package:ownorent/core/viewmodels/favorite_viewmodel.dart';
@@ -97,17 +98,31 @@ class _IntroViewState extends State<IntroView> {
                         PopUp().popLoad(context);
                         _auth.getAuthState();
 
-                        var position = await locationService.getPosition();
+                        Position? position =
+                            await locationService.getPosition();
                         if (position != null) {
                           locationService.setCoordinates(
                               LatLng(position.latitude, position.longitude));
 
                           print(locationService.userCoordinates?.latitude);
-                          List<Placemark> addresses =
-                              await placemarkFromCoordinates(
-                                  position.latitude, position.longitude);
-                          var first = addresses.first;
-                          locationService.setAddress(first.locality ?? "");
+                          List<Placemark?>? addresses;
+                          placemarkFromCoordinates(
+                                  position.latitude, position.longitude)
+                              .then((value) {
+                            addresses = value;
+                          }).catchError((e) {
+                            addresses = null;
+                          });
+
+                          Placemark firstL;
+                          String locality;
+                          if (addresses != null) {
+                            firstL = addresses!.first!;
+                            locality = firstL.locality ?? "";
+                          } else {
+                            locality = "No location";
+                          }
+                          locationService.setAddress(locality);
                           if (_auth.userId != null) {
                             FirebaseFirestore.instance
                                 .collection("users")
@@ -115,7 +130,7 @@ class _IntroViewState extends State<IntroView> {
                                 .update({
                               "lat": position.latitude,
                               "long": position.longitude,
-                              "address": first.locality
+                              "address": locality
                             });
                           }
                         } else {

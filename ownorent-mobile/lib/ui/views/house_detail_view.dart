@@ -55,7 +55,12 @@ class _HouseDetailViewState extends State<HouseDetailView> {
         actions: [
           IconButton(
               onPressed: () {
-                _favorites.addOrRemove(_houseViewmodel.currentHouse?.id ?? "");
+                if (_auth.authState == true) {
+                  _favorites
+                      .addOrRemove(_houseViewmodel.currentHouse?.id ?? "");
+                } else {
+                  RouteController().push(context, Login());
+                }
               },
               icon: Icon(
                 _favorites.favoriteIds!

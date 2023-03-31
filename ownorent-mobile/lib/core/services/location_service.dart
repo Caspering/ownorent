@@ -9,8 +9,8 @@ class LocationService extends ChangeNotifier {
   LatLng? get userCoordinates => _userCoordinates;
   String? get location => _location;
 
-  Future<Position> getPosition() async {
-    Position position = await Geolocator.getCurrentPosition(
+  Future<Position>? getPosition() async {
+    Position? position = await Geolocator.getCurrentPosition(
       desiredAccuracy: LocationAccuracy.best,
     );
     return position;

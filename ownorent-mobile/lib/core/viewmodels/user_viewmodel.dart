@@ -41,6 +41,14 @@ class UserViewmodel extends ChangeNotifier {
     }
   }
 
+  updateUserName(firstname, lastname, uid) {
+    _api.updateDocumentMap({"firstname": firstname, "lastname": lastname}, uid);
+  }
+
+  updateProfilePhoto(imageUrl, uid) {
+    _api.updateDocument("profilePhoto", imageUrl, uid);
+  }
+
   setCurrentUser(cUser) {
     _currentUser = cUser;
   }

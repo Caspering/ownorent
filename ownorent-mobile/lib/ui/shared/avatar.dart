@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ownorent/utils/colors.dart';
 import 'package:provider/provider.dart';
 
 import '../../core/models/user_model.dart';
@@ -20,6 +21,7 @@ class _AvatarState extends State<Avatar> {
 
     return Container(
       child: CircleAvatar(
+        backgroundColor: ownorentWhite,
         radius: 7,
         backgroundImage:
             NetworkImage(userViewModel.currentUser?.profilePhoto ?? ""),

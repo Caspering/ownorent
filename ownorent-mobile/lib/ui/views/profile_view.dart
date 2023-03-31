@@ -4,6 +4,10 @@ import 'package:ownorent/ui/views/change_password_view.dart';
 import 'package:ownorent/ui/views/delete_account_view.dart';
 import 'package:ownorent/ui/views/favorites_view.dart';
 import 'package:ownorent/ui/views/intro_view.dart';
+import 'package:ownorent/ui/views/settings_view.dart';
+import 'package:ownorent/ui/views/update_name.dart';
+import 'package:ownorent/ui/views/update_profile_picture.dart';
+import 'package:ownorent/utils/popup.dart';
 import 'package:ownorent/utils/router.dart';
 import 'package:provider/provider.dart';
 
@@ -36,14 +40,6 @@ class _ProfileViewState extends State<ProfileView> {
           style: TextStyle(
               color: ownorentPurple, fontSize: TextSize().h3(context)),
         ),
-        actions: [
-          IconButton(
-              onPressed: () {},
-              icon: Icon(
-                Icons.settings,
-                color: ownorentPurpleGrey,
-              ))
-        ],
       ),
       body: Container(
         width: double.infinity,
@@ -67,6 +63,9 @@ class _ProfileViewState extends State<ProfileView> {
                           fontWeight: FontWeight.w600),
                     ),
                     ListTile(
+                      onTap: () {
+                        PopUp().showInfo(context, "Coming soon...");
+                      },
                       contentPadding: EdgeInsets.all(0),
                       leading: Icon(
                         Icons.smart_display,
@@ -142,6 +141,54 @@ class _ProfileViewState extends State<ProfileView> {
                           color: ownorentPurple,
                           fontSize: TextSize().p(context),
                           fontWeight: FontWeight.w600),
+                    ),
+                    ListTile(
+                      onTap: () {
+                        RouteController().push(context, UpdatePicture());
+                      },
+                      contentPadding: EdgeInsets.all(0),
+                      leading: Icon(
+                        Icons.person,
+                        size: TextSize().h1(context),
+                        color: ownorentPurple,
+                      ),
+                      title: Text(
+                        "Update Profile Picture",
+                        style: TextStyle(
+                            color: ownorentPurple,
+                            fontSize: TextSize().p(context),
+                            fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                    Divider(
+                      thickness: 0.5,
+                      color: greyOne,
+                    ),
+                    ListTile(
+                      onTap: () {
+                        userViewModel
+                            .setFirstname(userViewModel.currentUser?.firstname);
+                        userViewModel
+                            .setLastname(userViewModel.currentUser?.lastname);
+                        RouteController().push(context, UpdateName());
+                      },
+                      contentPadding: EdgeInsets.all(0),
+                      leading: Icon(
+                        Icons.edit,
+                        size: TextSize().h1(context),
+                        color: ownorentPurple,
+                      ),
+                      title: Text(
+                        "Update Name",
+                        style: TextStyle(
+                            color: ownorentPurple,
+                            fontSize: TextSize().p(context),
+                            fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                    Divider(
+                      thickness: 0.5,
+                      color: greyOne,
                     ),
                     ListTile(
                       onTap: () {

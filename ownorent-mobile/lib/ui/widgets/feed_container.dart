@@ -3,11 +3,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:ownorent/ui/views/singin.dart';
 import 'package:ownorent/utils/colors.dart';
 import 'package:ownorent/utils/font_size.dart';
 import 'package:ownorent/utils/formatter.dart';
+import 'package:ownorent/utils/router.dart';
 import 'package:provider/provider.dart';
 
+import '../../core/services/authentication.dart';
 import '../../core/viewmodels/favorite_viewmodel.dart';
 import '../../utils/date.dart';
 
@@ -41,6 +44,7 @@ class _FeedContainerState extends State<FeedContainer> {
   @override
   Widget build(BuildContext context) {
     FavoriteViewModel _favorites = Provider.of<FavoriteViewModel>(context);
+    AuthenticationService _auth = Provider.of<AuthenticationService>(context);
     return GestureDetector(
         onTap: widget.onTapped,
         child: Container(
@@ -71,7 +75,6 @@ class _FeedContainerState extends State<FeedContainer> {
                           color: ownorentWhite),
                     ),
                     margin: EdgeInsets.only(top: 10, left: 5),
-                    height: 20,
                     decoration: BoxDecoration(
                         color: Color.fromARGB(255, 43, 110, 45),
                         borderRadius: BorderRadius.circular(15)),
@@ -100,7 +103,11 @@ class _FeedContainerState extends State<FeedContainer> {
                     Expanded(child: Container()),
                     IconButton(
                         onPressed: () {
-                          _favorites.addOrRemove(widget.docId);
+                          if (_auth.authState == true) {
+                            _favorites.addOrRemove(widget.docId);
+                          } else {
+                            RouteController().push(context, Login());
+                          }
                         },
                         icon: Icon(
                           _favorites.favoriteIds!.contains(widget.docId)
@@ -158,7 +165,6 @@ class _FeedContainerState extends State<FeedContainer> {
                       color: ownorentWhite),
                 ),
                 margin: EdgeInsets.only(top: 10, left: 5),
-                height: 20,
                 decoration: BoxDecoration(
                     color: grey, borderRadius: BorderRadius.circular(15)),
               ),

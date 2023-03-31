@@ -84,47 +84,51 @@ class _HouseDescriptionState extends State<HouseDescription> {
               Container(
                 height: 10,
               ),
-              CeoDropdown(
+              Center(
+                  child: CeoDropdown(
                 items: paymentType,
                 value: _houseViewmodel.paymentType,
                 hint: "Listing type",
                 onChanged: (value) {
                   _houseViewmodel.setPaymentType(value);
                 },
-              ),
+              )),
               Container(
                 height: 5,
               ),
-              CeoDropdown(
+              Center(
+                  child: CeoDropdown(
                 items: houseTypes,
                 value: _houseViewmodel.houseType,
                 hint: "House type",
                 onChanged: (value) {
                   _houseViewmodel.setHouseType(value);
                 },
-              ),
+              )),
               Container(
                 height: 5,
               ),
-              CeoDropdown(
+              Center(
+                  child: CeoDropdown(
                 items: getBedroomNumber(),
                 value: _houseViewmodel.bedroomNumber,
                 hint: "No of rooms",
                 onChanged: (value) {
                   _houseViewmodel.setBedroomNumber(value);
                 },
-              ),
+              )),
               Container(
                 height: 5,
               ),
-              CeoDropdown(
+              Center(
+                  child: CeoDropdown(
                 items: getBedroomNumber(),
                 value: _houseViewmodel.bathroomNumber,
                 hint: "No of bathrooms",
                 onChanged: (value) {
                   _houseViewmodel.setBathroomNumber(value);
                 },
-              ),
+              )),
               Container(
                 height: 5,
               ),
