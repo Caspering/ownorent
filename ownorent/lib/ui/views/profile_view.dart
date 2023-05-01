@@ -5,6 +5,7 @@ import 'package:ownorent/ui/views/change_password_view.dart';
 import 'package:ownorent/ui/views/delete_account_view.dart';
 import 'package:ownorent/ui/views/favorites_view.dart';
 import 'package:ownorent/ui/views/intro_view.dart';
+import 'package:ownorent/ui/views/purpose_screen.dart';
 import 'package:ownorent/ui/views/settings_view.dart';
 import 'package:ownorent/ui/views/update_name.dart';
 import 'package:ownorent/ui/views/update_profile_picture.dart';
@@ -66,6 +67,24 @@ class _ProfileViewState extends State<ProfileView> {
                           color: ownorentPurple,
                           fontSize: TextSize().p(context),
                           fontWeight: FontWeight.w600),
+                    ),
+                    ListTile(
+                      onTap: () {
+                        RouteController().push(context, PurposeScreen());
+                      },
+                      contentPadding: EdgeInsets.all(0),
+                      leading: Icon(
+                        Icons.settings,
+                        size: TextSize().h1(context),
+                        color: ownorentPurple,
+                      ),
+                      title: Text(
+                        "Edit preferences",
+                        style: TextStyle(
+                            color: ownorentPurple,
+                            fontSize: TextSize().p(context),
+                            fontWeight: FontWeight.w500),
+                      ),
                     ),
                     _tailorViewmodel.role == 'Sell'
                         ? ListTile(

@@ -97,7 +97,9 @@ class _LocationSetViewState extends State<LocationSetView> {
                   PopUp().popLoad(context);
                   await _tailorViewmodel.searchLocation(value).then((value) {
                     RouteController().pop(context);
-                    _tailorViewmodel.setSaveLocation(value);
+                    _tailorViewmodel.setSaveLocation(value['name']);
+                    _tailorViewmodel.setCoordinates(
+                        value["coord"]["lat"], value["coord"]["lon"]);
                   }).catchError((e) {
                     RouteController().pop(context);
                     PopUp().showError(context, e.toString());
@@ -114,6 +116,9 @@ class _LocationSetViewState extends State<LocationSetView> {
                       .then((value) {
                     RouteController().pop(context);
                     _tailorViewmodel.setSaveLocation(value);
+                    _tailorViewmodel.setCoordinates(
+                        locationService.userCoordinates?.latitude ?? 0.0,
+                        locationService.userCoordinates?.longitude ?? 0.0);
                   }).catchError((e) {
                     RouteController().pop(context);
                     PopUp().showError(context, e.toString());
@@ -161,8 +166,10 @@ class _LocationSetViewState extends State<LocationSetView> {
                   onPressed: _tailorViewmodel.location != ""
                       ? () async {
                           PopUp().popLoad(context);
-                          _tailorViewmodel
-                              .addLocation(_tailorViewmodel.location);
+                          _tailorViewmodel.addLocation(
+                              _tailorViewmodel.location,
+                              _tailorViewmodel.lat,
+                              _tailorViewmodel.long);
 
                           if (_auth.authState == true) {
                             bool result =

@@ -168,7 +168,8 @@ class _AppointmentDetailsState extends State<AppointmentDetails> {
                 ),
               ),
               _appointmentViewmodel.status == "pending" &&
-                      _tailorViewmodel == 'Sell'
+                      _appointmentViewmodel.currentAppointment?.agentId ==
+                          _auth.userId
                   ? Row(
                       children: [
                         Expanded(

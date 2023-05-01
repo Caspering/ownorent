@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:ownorent/core/models/house_model.dart';
 import 'package:ownorent/ui/shared/empty_screen.dart';
 import 'package:ownorent/ui/views/house_detail_view.dart';
@@ -45,7 +46,8 @@ class _FeedViewState extends State<FeedView> {
         height: double.infinity,
         color: ownorentWhite,
         child: FutureBuilder<List<House>>(
-            future: _houseViewmodel.getFeed(_tailorViewmodel.location ?? ""),
+            future: _houseViewmodel.getFeed(LatLng(
+                _tailorViewmodel.lat ?? 0.0, _tailorViewmodel.long ?? 0.0)),
             builder: (context, snapshot) {
               print(snapshot.error);
               print(snapshot.data);

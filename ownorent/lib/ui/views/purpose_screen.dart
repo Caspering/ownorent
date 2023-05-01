@@ -80,10 +80,10 @@ class _PurposeScreenState extends State<PurposeScreen> {
               Center(
                   child: CeoDropdown(
                 items: roles,
-                value: _userViewModel.role,
+                value: _tailorViewmodel.role,
                 hint: "Purpose",
                 onChanged: (value) {
-                  _userViewModel.setRole(value);
+                  _tailorViewmodel.setRole(value);
                 },
               )),
               Expanded(child: Container()),
@@ -93,15 +93,15 @@ class _PurposeScreenState extends State<PurposeScreen> {
                 height: 60,
                 margin: EdgeInsets.only(bottom: 20),
                 decoration: BoxDecoration(
-                  color: _userViewModel.role != null
+                  color: _tailorViewmodel.role != null
                       ? ownorentPurple
                       : ownorentPurpleGrey,
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: MaterialButton(
-                  onPressed: _userViewModel.role != null
+                  onPressed: _tailorViewmodel.role != null
                       ? () {
-                          _tailorViewmodel.addRole(_userViewModel.role);
+                          _tailorViewmodel.addRole(_tailorViewmodel.role);
                           RouteController().push(context, LocationSetView());
                         }
                       : null,

@@ -11,6 +11,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:ownorent/core/models/house_model.dart';
 import 'package:ownorent/core/services/location_service.dart';
 import 'package:ownorent/core/viewmodels/house_viewmodel.dart';
+import 'package:ownorent/core/viewmodels/tailor_viewmodel.dart';
 import 'package:ownorent/ui/views/house_detail_view.dart';
 import 'package:provider/provider.dart';
 
@@ -31,18 +32,12 @@ class _MapviewState extends State<Mapview> {
   LatLng? dest;
   Position? currentLocation;
   var markerIcon;
-  @override
-  void getLongLat() async {
-    Position position = await Geolocator.getCurrentPosition();
-    setState(() {
-      start = LatLng(position.latitude, position.longitude);
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
     LocationService _location = Provider.of<LocationService>(context);
     HouseViewmodel _houseViewmodel = Provider.of<HouseViewmodel>(context);
+    TailorViewmodel _tailorViewmodel = Provider.of<TailorViewmodel>(context);
     return Scaffold(
         body: FutureBuilder<List<House>>(
             future: _houseViewmodel.getAllHouses(),
@@ -82,20 +77,23 @@ class _MapviewState extends State<Mapview> {
                 }
                 return GoogleMap(
                   initialCameraPosition: CameraPosition(
-                      target: _location.userCoordinates ?? LatLng(0.0, 0.0),
+                      target: LatLng(_tailorViewmodel.lat ?? 0.0,
+                          _tailorViewmodel.long ?? 0.0),
                       zoom: 12),
                   markers: list,
                 );
               } else {
                 return GoogleMap(
                   initialCameraPosition: CameraPosition(
-                      target: _location.userCoordinates ?? LatLng(0.0, 0.0),
+                      target: LatLng(_tailorViewmodel.lat ?? 0.0,
+                          _tailorViewmodel.long ?? 0.0),
                       zoom: 12),
                   markers: {
                     Marker(
-                        markerId: MarkerId("source"),
-                        position:
-                            _location.userCoordinates ?? LatLng(0.0, 0.0)),
+                      markerId: MarkerId("source"),
+                      position: LatLng(_tailorViewmodel.lat ?? 0.0,
+                          _tailorViewmodel.long ?? 0.0),
+                    ),
                   },
                   onMapCreated: (mapController) {
                     _controller.complete(mapController);

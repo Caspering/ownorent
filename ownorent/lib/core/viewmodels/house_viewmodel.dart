@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_final_fields
 
 import 'dart:io';
-
+import 'dart:math' show cos, sqrt, asin;
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -127,16 +127,28 @@ class HouseViewmodel extends ChangeNotifier {
     return House.fromMap(result.data() as Map<String, dynamic>, result.id);
   }
 
-  Future<List<House>> getFeed(String address) async {
+  Future<List<House>> getFeed(LatLng userCoordinates) async {
     var result = await _api.getDocuments();
-
-    feed = result.docs
+    houses = result.docs
         .map((doc) => House.fromMap(doc.data() as Map<String, dynamic>, doc.id))
-        .where((element) => element.area == address)
         .toList();
-    feed.shuffle();
+    final feed = houses.where((element) {
+      final proximity = _distanceBetween(
+          element.locationLat ?? 0.0,
+          element.locationLong ?? 0.0,
+          userCoordinates.latitude,
+          userCoordinates.longitude);
+      return proximity <= 100;
+    }).toList();
+    return feed;
+  }
 
-    return feed.take(15).toList();
+  double _distanceBetween(double lat1, double lon1, double lat2, double lon2) {
+    const p = 0.017453292519943295;
+    final a = 0.5 -
+        cos((lat2 - lat1) * p) / 2 +
+        cos(lat1 * p) * cos(lat2 * p) * (1 - cos((lon2 - lon1) * p)) / 2;
+    return 12742 * asin(sqrt(a)); // 2 * R; R = 6371 km
   }
 
   Future<List<House>> getUserHomes(userId) async {

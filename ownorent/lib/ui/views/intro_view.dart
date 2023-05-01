@@ -96,16 +96,14 @@ class _IntroViewState extends State<IntroView> {
                   width: MediaQuery.of(context).size.width / 1.5,
                   child: MaterialButton(
                       onPressed: () async {
-                        await _favorites.getFavourites();
-                        String? role = await _tailorViewmodel.getRole();
-                        String? location = await _tailorViewmodel.getLocation();
-                        if (role != null && location != null) {
-                          _tailorViewmodel.setRole(role);
-                          _tailorViewmodel.setSaveLocation(location);
-                        }
-                        print(_tailorViewmodel.role);
-                        print(_favorites.favoriteIds);
                         PopUp().popLoad(context);
+                        await _favorites.getFavourites();
+                        await _tailorViewmodel.getRole();
+                        await _tailorViewmodel.getLocation();
+
+                        print(_tailorViewmodel.lat);
+                        print(_favorites.favoriteIds);
+
                         _auth.getAuthState();
 
                         Position? position;
@@ -118,10 +116,10 @@ class _IntroViewState extends State<IntroView> {
                             position?.latitude ?? 0.0,
                             position?.longitude ?? 0.0));
                         RouteController().pop(context);
-                        if (_tailorViewmodel.role == "" &&
-                            _tailorViewmodel.location == "") {
-                          RouteController().push(context, PurposeScreen());
-                        } else {
+                        if (_tailorViewmodel.role != "" &&
+                            _tailorViewmodel.location != "" &&
+                            _tailorViewmodel.lat != 0.0 &&
+                            _tailorViewmodel.long != 0.0) {
                           if (_auth.authState == true) {
                             bool result =
                                 await _userViewModel.checkIfUser(_auth.userId);
@@ -134,6 +132,8 @@ class _IntroViewState extends State<IntroView> {
                           } else {
                             RouteController().push(context, AppIndex());
                           }
+                        } else {
+                          RouteController().push(context, PurposeScreen());
                         }
                       },
 
