@@ -60,6 +60,10 @@ class Api {
     return ref.where(field, arrayContains: param).snapshots();
   }
 
+  Future<QuerySnapshot> queryIdWhereIn(list) {
+    return ref.where(FieldPath.documentId, whereIn: list).get();
+  }
+
   Future<DocumentReference> addData(Map data) {
     return ref.add(data);
   }

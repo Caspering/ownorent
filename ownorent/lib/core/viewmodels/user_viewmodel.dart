@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:ownorent/core/services/api.dart';
+import 'package:ownorent/core/viewmodels/house_viewmodel.dart';
 
 import '../models/user_model.dart';
 import '../services/firebase_storage.dart';
@@ -35,6 +36,14 @@ class UserViewmodel extends ChangeNotifier {
     var result = await _api.getDocumentById(uid);
 
     return Users.fromMap(result.data() as Map<String, dynamic>, result.id);
+  }
+
+  Future<List<Users?>> getFeedUsers() async {
+    List<String> uids = await HouseViewmodel().getHouseOwnersList();
+    var result = await _api.queryIdWhereIn(uids.toSet());
+    return result.docs.map((doc) {
+      return Users.fromMap(doc.data() as Map<String, dynamic>, doc.id);
+    }).toList();
   }
 
   Future<bool> checkIfUser(userId) async {

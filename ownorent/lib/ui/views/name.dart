@@ -140,15 +140,6 @@ class _FullnameState extends State<Fullname> {
                             controller: _phoneField,
                             // prefix: Icons.person_outline_rounded,
                           ))),
-                  Center(
-                      child: CeoDropdown(
-                    items: roles,
-                    value: _userViewModel.role,
-                    hint: "Listing type",
-                    onChanged: (value) {
-                      _userViewModel.setRole(value);
-                    },
-                  )),
                   Expanded(child: Container()),
                   Center(
                       child: Container(

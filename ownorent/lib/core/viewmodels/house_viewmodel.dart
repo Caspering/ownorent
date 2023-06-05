@@ -122,6 +122,15 @@ class HouseViewmodel extends ChangeNotifier {
     return houses;
   }
 
+  Future<List<String>> getHouseOwnersList() async {
+    List<House> allHouses = await getAllHouses();
+    List<String> owners = [];
+    for (House house in allHouses) {
+      owners.add(house.ownersId ?? "");
+    }
+    return owners;
+  }
+
   Future<House> getHouseById(id) async {
     var result = await _api.getDocumentById(id);
     return House.fromMap(result.data() as Map<String, dynamic>, result.id);
