@@ -106,15 +106,6 @@ class _IntroViewState extends State<IntroView> {
 
                         _auth.getAuthState();
 
-                        Position? position;
-                        await locationService.getPosition()?.then((value) {
-                          position = value;
-                        }).catchError((e) {
-                          position = null;
-                        });
-                        locationService.setCoordinates(LatLng(
-                            position?.latitude ?? 0.0,
-                            position?.longitude ?? 0.0));
                         RouteController().pop(context);
                         if (_tailorViewmodel.role != "" &&
                             _tailorViewmodel.location != "" &&
