@@ -6,6 +6,7 @@ import 'package:ownorent/utils/colors.dart';
 
 import '../../utils/font_size.dart';
 import '../../utils/router.dart';
+import 'purpose_screen.dart';
 
 class NotLogged extends StatefulWidget {
   const NotLogged({super.key});
@@ -23,12 +24,13 @@ class _NotLoggedState extends State<NotLogged> {
         elevation: 0.0,
       ),
       body: Container(
-        height: double.infinity,
+        height: MediaQuery.of(context).size.height,
         width: double.infinity,
         color: ownorentWhite,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Expanded(child: Container()),
             Text(
               "Login to access this feature",
               //textAlign: TextAlign.center,
@@ -56,6 +58,25 @@ class _NotLoggedState extends State<NotLogged> {
                   color: ownorentPurple, borderRadius: BorderRadius.circular(10)
                   //
                   ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Expanded(child: Container()),
+            GestureDetector(
+              onTap: () {
+                RouteController().push(context, PurposeScreen());
+              },
+              child: Text(
+                "Click here to update preferences",
+                style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: TextSize().p(context),
+                    color: ownorentRed),
+              ),
+            ),
+            SizedBox(
+              height: 10,
             ),
           ],
         ),

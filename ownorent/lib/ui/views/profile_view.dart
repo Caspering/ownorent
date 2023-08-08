@@ -246,6 +246,7 @@ class _ProfileViewState extends State<ProfileView> {
                     ListTile(
                       onTap: () async {
                         await _auth.signOut();
+                        userViewModel.setCurrentUser(null);
                         RouteController()
                             .pushAndRemoveUntil(context, IntroView());
                       },
