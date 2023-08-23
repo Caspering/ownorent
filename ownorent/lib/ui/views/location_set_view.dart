@@ -181,7 +181,8 @@ class _LocationSetViewState extends State<LocationSetView> {
                               RouteController().push(context, Fullname());
                             }
                           } else {
-                            RouteController().push(context, AppIndex());
+                            RouteController()
+                                .pushAndRemoveUntil(context, AppIndex());
                           }
                         }
                       : null,

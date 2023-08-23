@@ -133,7 +133,9 @@ class _HouseDescriptionState extends State<HouseDescription> {
               ),
               Center(
                 child: CustomTextField(
-                  hintText: "Price",
+                  hintText: _houseViewmodel.paymentType == "shortlet"
+                      ? "Price per night"
+                      : "Price",
                   controller: _price,
                   errorText: isPrice == false ? "Invalid price" : null,
                   onChanged: (String value) {

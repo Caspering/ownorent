@@ -13,6 +13,10 @@ class Api {
     return ref.get();
   }
 
+  Future<QuerySnapshot> getOrderedDocuments(field, bool isDescending) async {
+    return ref.orderBy(field, descending: isDescending).get();
+  }
+
   Stream<QuerySnapshot> streamDocuments() {
     return ref.snapshots();
   }
@@ -23,6 +27,10 @@ class Api {
 
   Future<QuerySnapshot> getWhereIsEqualTo(param, field) {
     return ref.where(field, isEqualTo: param).get();
+  }
+
+  Future<QuerySnapshot> getWhereIsNotEqualTo(param, field) {
+    return ref.where(field, isNotEqualTo: param).get();
   }
 
   Future<QuerySnapshot> getWhereIsEqualToLimited(param, field, limit) {

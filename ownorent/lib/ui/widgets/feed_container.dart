@@ -22,6 +22,7 @@ class FeedContainer extends StatefulWidget {
   String bathroom;
   String address;
   bool isPromoted;
+  String type;
   String docId;
   Function() onTapped;
   FeedContainer(
@@ -29,6 +30,7 @@ class FeedContainer extends StatefulWidget {
       required this.address,
       required this.docId,
       required this.isPromoted,
+      required this.type,
       required this.bathroom,
       required this.bedroom,
       required this.price,
@@ -94,7 +96,9 @@ class _FeedContainerState extends State<FeedContainer> {
                 child: Row(
                   children: [
                     Text(
-                      '${getCurrency()}${formatMoney(int.parse(widget.price))}',
+                      widget.type == "shortlet"
+                          ? '${getCurrency()}${formatMoney(int.parse(widget.price))}/night'
+                          : '${getCurrency()}${formatMoney(int.parse(widget.price))}',
                       style: TextStyle(
                           color: ownorentPurple,
                           fontWeight: FontWeight.w600,

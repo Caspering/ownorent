@@ -31,6 +31,7 @@ class _FeedViewState extends State<FeedView> {
     HouseViewmodel _houseViewmodel = Provider.of<HouseViewmodel>(context);
     UserViewmodel _userViewModel = Provider.of<UserViewmodel>(context);
     final _tailorViewmodel = Provider.of<TailorViewmodel>(context);
+    String purpose = _tailorViewmodel.role ?? "";
     return Scaffold(
       appBar: AppBar(
         backgroundColor: ownorentWhite,
@@ -47,8 +48,10 @@ class _FeedViewState extends State<FeedView> {
         // height: MediaQuery.of(context).size.height,
         color: ownorentWhite,
         child: FutureBuilder<List<House>>(
-            future: _houseViewmodel.getFeed(LatLng(
-                _tailorViewmodel.lat ?? 0.0, _tailorViewmodel.long ?? 0.0)),
+            future: _houseViewmodel.getFeed(
+                LatLng(
+                    _tailorViewmodel.lat ?? 0.0, _tailorViewmodel.long ?? 0.0),
+                purpose),
             builder: (context, snapshot) {
               print(snapshot.error);
               print(snapshot.data);
@@ -58,60 +61,32 @@ class _FeedViewState extends State<FeedView> {
                   return Empty();
                 } else {
                   print(snapshot.data?.length);
-                  int mid = snapshot.data!.length ~/ 2;
-                  List<House> left = snapshot.data!.sublist(0, mid);
-                  List<House> right = snapshot.data!.sublist(mid);
-                  return ListView(
-                    children: [
-                      ListView.builder(
-                          physics: NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: left.length,
-                          itemBuilder: (context, index) {
-                            return FeedContainer(
-                              onTapped: () {
-                                _houseViewmodel.setCurrentHouse(left[index]);
-                                print(_houseViewmodel
-                                    .currentHouse?.accomodationType);
-                                RouteController()
-                                    .push(context, const HouseDetailView());
-                              },
-                              isPromoted: false,
-                              docId: left[index].id ?? "",
-                              address: left[index].address ?? "",
-                              bathroom: left[index].bathroomNumber ?? "",
-                              bedroom: left[index].bedroomNumber ?? "",
-                              price: left[index].price ?? "",
-                              dateAdded: left[index].dateAdded,
-                              mainImage: left[index].images?[0],
-                            );
-                          }),
-                      // UserRowWidget(),
-                      ListView.builder(
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemCount: right.length,
-                          itemBuilder: (context, index) {
-                            return FeedContainer(
-                              onTapped: () {
-                                _houseViewmodel.setCurrentHouse(right[index]);
-                                print(_houseViewmodel
-                                    .currentHouse?.accomodationType);
-                                RouteController()
-                                    .push(context, const HouseDetailView());
-                              },
-                              isPromoted: false,
-                              docId: right[index].id ?? "",
-                              address: right[index].address ?? "",
-                              bathroom: right[index].bathroomNumber ?? "",
-                              bedroom: right[index].bedroomNumber ?? "",
-                              price: right[index].price ?? "",
-                              dateAdded: right[index].dateAdded,
-                              mainImage: right[index].images?[0],
-                            );
-                          })
-                    ],
-                  );
+
+                  return ListView.builder(
+                      // physics: NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: snapshot.data?.length,
+                      itemBuilder: (context, index) {
+                        return FeedContainer(
+                          onTapped: () {
+                            _houseViewmodel
+                                .setCurrentHouse(snapshot.data?[index]);
+                            print(
+                                _houseViewmodel.currentHouse?.accomodationType);
+                            RouteController()
+                                .push(context, const HouseDetailView());
+                          },
+                          type: snapshot.data?[index].type ?? "",
+                          isPromoted: false,
+                          docId: snapshot.data?[index].id ?? "",
+                          address: snapshot.data?[index].address ?? "",
+                          bathroom: snapshot.data?[index].bathroomNumber ?? "",
+                          bedroom: snapshot.data?[index].bedroomNumber ?? "",
+                          price: snapshot.data?[index].price ?? "",
+                          dateAdded: snapshot.data?[index].dateAdded,
+                          mainImage: snapshot.data?[index].images?[0],
+                        );
+                      });
                 }
               } else {
                 return Center(

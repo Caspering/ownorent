@@ -136,19 +136,43 @@ class HouseViewmodel extends ChangeNotifier {
     return House.fromMap(result.data() as Map<String, dynamic>, result.id);
   }
 
-  Future<List<House>> getFeed(LatLng userCoordinates) async {
-    var result = await _api.getDocuments();
-    houses = result.docs
+  Future<List<House>> getShortLets() async {
+    var result = await _api.getWhereIsEqualTo('Shortlet', "type");
+    final List<House> houses = result.docs
         .map((doc) => House.fromMap(doc.data() as Map<String, dynamic>, doc.id))
         .toList();
-    final feed = houses.where((element) {
-      final proximity = _distanceBetween(
-          element.locationLat ?? 0.0,
-          element.locationLong ?? 0.0,
-          userCoordinates.latitude,
-          userCoordinates.longitude);
-      return proximity <= 100;
+    return houses;
+  }
+
+  Future<List<House>> getFeed(LatLng userCoordinates, String purpose) async {
+    var result = await _api.getOrderedDocuments("dateAdded", true);
+
+    // Assuming that the data returned from the API is of type List<House>
+    final List<House> houses = result.docs
+        .map((doc) => House.fromMap(doc.data() as Map<String, dynamic>, doc.id))
+        .toList();
+
+    // Make sure that the House objects are correctly converted and have valid data
+
+    final List<House> purposeHouses = houses.where((element) {
+      if (purpose == "Shortlet") {
+        return element.type == "shortlet";
+      } else if (purpose == "Buy") {
+        return element.type != "shortlet";
+      } else {
+        return true;
+      }
     }).toList();
+    final List<House> feed = purposeHouses.where((element) {
+      final proximity = _distanceBetween(
+        element.locationLat ?? 0.0,
+        element.locationLong ?? 0.0,
+        userCoordinates.latitude,
+        userCoordinates.longitude,
+      );
+      return proximity <= 300;
+    }).toList();
+
     return feed;
   }
 

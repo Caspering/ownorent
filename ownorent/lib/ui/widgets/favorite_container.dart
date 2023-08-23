@@ -33,6 +33,7 @@ class _FavoritesContainerState extends State<FavoritesContainer> {
             return FeedContainer(
                 address: snapshot.data?.address ?? "",
                 docId: snapshot.data?.id ?? "",
+                type: snapshot.data?.type ?? "",
                 isPromoted: false,
                 bathroom: snapshot.data?.bathroomNumber ?? "",
                 bedroom: snapshot.data?.bedroomNumber ?? "",
